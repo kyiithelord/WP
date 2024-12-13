@@ -1,0 +1,18 @@
+<odoo>
+    <record id="view_partner_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[@name='internal_notes']" position="after">
+               <page string='Geolocation' name='geolocation'>
+                     <group>
+                        <field name="latitude" />
+                        <field name="longitude" />
+                        <button type="object" name="action_view_map" string="Show on Map" class="btn-primary" />
+                    </group>
+               </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

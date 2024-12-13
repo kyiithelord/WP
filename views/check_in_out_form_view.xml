@@ -1,0 +1,50 @@
+<odoo>
+    <record id="view_sale_order_form_inherit_check_in_out_form" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.check.in.out.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/button[@name='action_confirm']" position="after">
+                <!-- <button  name="action_check_in" type="object" string="Check In"/> -->
+                <!-- <button name="action_check_out" type="object" string="Check Out"/> -->
+                <button name="action_check_in"
+                        type="object"
+                        string="Check In"
+                        attrs="{'invisible': [('state', '=', 'check out')]}"/>
+                <button name="action_check_out"
+                        type="object"
+                        string="Check Out"
+                        attrs="{'invisible': [('state', '!=', 'check in')]}"/>
+            </xpath>
+
+            <xpath expr="//header/button[@id='create_invoice_percentage']" position="attributes">
+                <attribute name="attrs">{'invisible': [('state', '!=', 'check out')]}</attribute>
+            </xpath>
+
+            <xpath expr="//header/button[@name='action_cancel']" position="attributes">
+                <attribute name="attrs">{'invisible': [('state', '!=', 'check out')]}</attribute>
+            </xpath>
+
+            <xpath expr="//notebook/page[@name='customer_signature']" position="after">
+                <page name="check_in_out" string="Check In/Out">
+                       <field name="check_in_out_ids">
+                            <tree>
+                                <field name="name"/>
+                                <field name="state"/>
+                                <field name="date"/>
+                                <field name="attachment" widget="image"/>
+                            </tree>
+                            <form>
+                                <group>
+                                    <field name="name" required="1"/>
+                                    <field name="state" readonly="1"/>
+                                    <field name="date" required="1"/>
+                                    <field name="attachment" widget="image"/>
+                                </group>
+                            </form>
+                       </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
